@@ -49,3 +49,13 @@ class Monitor:
 
         # 4. Return (fps, mem_mb)
         return fps, mem_mb
+     
+    def reset(self):
+    	self.start = time.time()
+    	self.frame = 0
+    	
+    def log(self, fps, mem_mb, every_n=10,path="metrics.log"):
+    	if self.frames % every_n != 0:
+    		return
+    	with open(path,"a") as f:
+    		f.write(f"{time.time():.2f}, {self.frames}, {fps:.2f}, {mem_mb:.2f}\n")

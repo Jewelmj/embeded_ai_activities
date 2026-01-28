@@ -15,17 +15,30 @@ import time
 
 
 #  Initialize modules
-cam = Webcam()
-sampler = FrameSampler(target_fps=5)
+try:
+    cam = Webcam(0,640,480)
+except RuntimeError as e:
+    print(e)
+    print("Running without camera...")
+    cam = None
+
+sampler = FrameSampler(target_fps=10)
 monitor = Monitor()
-monitor.start = time.time()  # STUDENTS MUST DO THIS
+monitor.start = time.time() # STUDENTS MUST DO THIS
+
+frame_count = 0
 
 try:
     while True:
         # Step 1: Grab a frame
-        frame = cam.read()
-        if frame is None:
+        if cam is None:
+            if frame_count%3 == 0:
+               print("Warning, webcam is disconected!")
+            frame_count +=1
+            time.sleep(0.1)
             continue  # Handle camera disconnect gracefully
+        
+        frame = cam.read()
 
         # Step 2: Check if we should process this frame
         if not sampler.allow():
@@ -39,6 +52,8 @@ try:
 
         # Step 5: Monitor performance
         fps, mem = monitor.update()
+        monitor.log(fps, mem, every_n=10)
+        
         print(f"FPS: {fps:.2f} | Memory: {mem:.2f} MB")
 
 except KeyboardInterrupt:

@@ -31,5 +31,7 @@ def preprocess(frame, size=(224, 224)):
 
     # TODO 3: Normalize pixels to range [0, 1]
     frame = frame / 255.0
+    
+    frame = np.transpose(frame, (2, 0,1))
 
     return frame  # final processed image
