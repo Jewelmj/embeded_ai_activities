@@ -2,3 +2,7 @@ torch
 torchvision
 opencv-python
 psutil
+ultralytics
+pandas
+tdqm
+seaborn
