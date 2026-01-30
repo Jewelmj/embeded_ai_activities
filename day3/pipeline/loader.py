@@ -28,6 +28,13 @@ def load_image_paths(folder):
     # 2. Check for valid image extensions (.jpg, .png)
     # 3. Construct full file paths
     # 4. Append to image_paths list
+    valid_exts = (".jpg", ".jpeg", ".png")
+
+    for filename in os.listdir(folder):
+        if filename.lower().endswith(valid_exts):
+            full_path = os.path.join(folder, filename)
+            if os.path.isfile(full_path):
+                image_paths.append(full_path)
 
     return image_paths
 
@@ -48,6 +55,9 @@ def read_image(path):
     # TODO:
     # 1. Use OpenCV to read the image
     # 2. Handle failure cases (image not found / corrupted)
+    image = cv2.imread(path)
 
-    image = None
+    if image is None:
+        raise FileNotFoundError(f"Could not read image: {path}")
+
     return image

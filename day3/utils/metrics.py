@@ -51,11 +51,23 @@ class Monitor:
         return fps, mem_mb
      
     def reset(self):
-    	self.start = time.time()
-    	self.frame = 0
-    	
-    def log(self, fps, mem_mb, every_n=10,path="metrics.log"):
-    	if self.frames % every_n != 0:
-    		return
-    	with open(path,"a") as f:
-    		f.write(f"{time.time():.2f}, {self.frames}, {fps:.2f}, {mem_mb:.2f}\n")
+        """
+        Reset FPS tracking.
+        """
+        self.start = time.time()
+        self.frames = 0   # ✅ fixed name
+
+    def log(self, fps, mem_mb, every_n=10, path="metrics.log"):
+        """
+        Log metrics every N frames.
+        """
+        if self.frames % every_n != 0:
+            return
+
+        with open(path, "a") as f:
+            f.write(
+                f"{time.time():.2f}, "
+                f"{self.frames}, "
+                f"{fps:.2f}, "
+                f"{mem_mb:.2f}\n"
+            )
