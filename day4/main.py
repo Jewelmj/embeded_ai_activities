@@ -47,4 +47,10 @@ try:
 
 except KeyboardInterrupt:
     cam.release()
+
+    # Save FP32 MobileNet model
+    torch_model = model.get_torch_model()
+    torch.save(torch_model.state_dict(), "mobilenet_fp32.pth")
+
+    print("[INFO] Model saved as mobilenet_fp32.pth")
     print("[INFO] Camera stopped. Exiting.")

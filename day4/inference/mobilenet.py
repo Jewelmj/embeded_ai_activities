@@ -37,3 +37,6 @@ class MobileNetInference:
             prob = torch.nn.functional.softmax(output, dim=1)
 
         return prob
+    
+    def get_torch_model(self):
+        return self.model

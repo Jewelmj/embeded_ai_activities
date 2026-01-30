@@ -6,3 +6,5 @@ ultralytics
 pandas
 tdqm
 seaborn
+onnx 
+onnxruntime
